@@ -124,7 +124,7 @@ class ScheduleApp:
 
     def load_logo_image(self, queue_frame):
         try:
-            logo_path = "c:/Users/James Patrick/OneDrive/DSA/PUP.png"
+            logo_path = "Assets/images/nb.jpg"
             logo_image = tk.PhotoImage(file=logo_path)
             logo_image = logo_image.subsample(3, 3)
             logo_label = tk.Label(queue_frame, image=logo_image)
