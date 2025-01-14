@@ -82,7 +82,7 @@ class ScheduleApp:
 
     def load_building_image(self, header_frame):
         try:
-            building_image_path = "c:/Users/James Patrick/OneDrive/DSA/NBROOMS2.png"
+            building_image_path ="Assets/images/NBROOMS2.png"
             building_image = Image.open(building_image_path)
             building_image = building_image.resize((400, 250))
             self.building_image = ImageTk.PhotoImage(building_image)
