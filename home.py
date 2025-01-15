@@ -194,4 +194,8 @@ class HomePage:
 
         # Example usage of create_rounded_rectangle
         create_rounded_rectangle(sidebar, 10, 10, 110, 590, radius=45, fill=self.colors['pup_maroon'], outline=self.colors['pup_maroon'])  # Adjusted height to 590
-
+    
+    def prev_week(self):
+        pass
+    def next_week(self):
+        pass
