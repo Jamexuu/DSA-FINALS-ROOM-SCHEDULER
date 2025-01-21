@@ -21,7 +21,8 @@ class PUPWeeklyCalendar:
 
         self.fonts = {
             'gilroy bold': 'Gilroy Bold',
-            'gilroy heavy': 'Gilroy Heavy'
+            'gilroy heavy': 'Gilroy Heavy',
+            'poppins': 'Poppins'
         }
         
         self.root.configure(bg=self.colors['white'])
@@ -43,4 +44,3 @@ class PUPWeeklyCalendar:
 if __name__ == "__main__":
     app = PUPWeeklyCalendar()
     app.run()
-    

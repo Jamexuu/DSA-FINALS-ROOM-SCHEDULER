@@ -5,6 +5,7 @@ from sort_room import RoomScheduler, get_rooms  # Import the RoomScheduler class
 from time_picker import DateTimePicker, SectionPicker
 from queue_system import QueueManager  # Import the QueueManager class
 import json
+from history import HistoryManager  # Import the HistoryManager class
 
 class ReservationPage:
     def __init__(self, root, colors, selected_day, go_back_callback, fonts):
@@ -22,6 +23,8 @@ class ReservationPage:
         self.selected_year_section = None
         self.queue_manager = QueueManager()  # Initialize the QueueManager
         self.current_room_name = None  # Store the current room name
+        self.history_manager = HistoryManager()
+        self.history_manager.load_history_data()
         self.setup_gui()
 
     def setup_gui(self):
@@ -54,7 +57,7 @@ class ReservationPage:
         center_frame = tk.Frame(self.main_frame, bg=self.colors['gray'])
         center_frame.grid(row=1, column=1, rowspan=2, sticky='nsew', padx=10, pady=10)
 
-        center_label = tk.Label(center_frame, text="New \nBuilding", bg=self.colors['gray'], fg=self.colors['pup_maroon'], font=(self.fonts['gilroy heavy'], 40), justify='left')
+        center_label = tk.Label(center_frame, text="New \nBuilding", bg=self.colors['gray'], fg=self.colors['pup_maroon'], font=(self.fonts['poppins'], 40), justify='left')
         center_label.grid(row=0, column=0, padx=20, pady=(20, 0), sticky='w')
 
         self.draw_underline(center_frame, 200, row=0, column=0, columnspan=2, pady=(140,0))
@@ -350,6 +353,18 @@ class ReservationPage:
             self.schedule_table.insert("", "end", values=(f"{start_time} - {end_time}", self.selected_program.get(), self.selected_year_section.get()))
             self.update_queue_display(room_name)
 
+            if room.is_available(self.selected_day, start_time, end_time):
+                room.add_schedule(self.selected_day, start_time, end_time, 
+                        self.selected_program.get(), self.selected_year_section.get())
+                self.log_schedule_action(
+                    "Added",
+                    room_name,
+                    start_time,
+                    end_time,
+                    self.selected_program.get(),
+                    self.selected_year_section.get()
+                )
+
     def terminate_schedule(self):
         row_number = simpledialog.askstring("Terminate Schedule", "Enter the row number to terminate:")
         if row_number:
@@ -381,6 +396,14 @@ class ReservationPage:
                     return
 
                 messagebox.showinfo("Success", "Selected schedule has been terminated.")
+        self.log_schedule_action(
+            "Terminated",
+            self.current_room_name,
+            start_time,
+            end_time,
+            program,
+            year_section
+        )
 
     def update_queue_display(self, room_name):
         for widget in self.program_container.winfo_children():
@@ -403,6 +426,17 @@ class ReservationPage:
 
             time_label = tk.Label(self.time_container, text=time_range, font=("Arial", 12), bg=self.colors['gray'], fg=self.colors['black'])
             time_label.pack(anchor="w", pady=2)
+
+    def log_schedule_action(self, action: str, room_name: str, start_time: str, 
+                       end_time: str, program: str, year_section: str):
+        self.history_manager.add_history_entry(
+            action=action,
+            room_name=room_name,
+            start_time=start_time,
+            end_time=end_time,
+            program=program,
+            year_section=year_section
+        )
 
     def refresh(self):
         self.display_sorted_rooms()

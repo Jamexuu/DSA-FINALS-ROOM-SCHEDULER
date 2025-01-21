@@ -13,7 +13,6 @@ class HomePage:
         self.create_main_frame()
         self.create_title_label()
         self.create_days_grid(self.main_frame)
-        self.create_navigation(self.main_frame)
         self.create_sidebar()
 
     def create_main_frame(self):
@@ -144,30 +143,6 @@ class HomePage:
         reservation_page = ReservationPage(self.root, self.colors, day, self.setup_gui, self.fonts)
         reservation_page.run()
 
-    def create_navigation(self, parent):
-        nav_frame = tk.Frame(parent, bg=self.colors['white'])
-        nav_frame.pack(pady=40)
-
-        # Left arrow
-        left_arrow = tk.Label(nav_frame,
-                              text="<",
-                              font=('Arial', 24, 'bold'),
-                              bg=self.colors['white'],
-                              fg="red",
-                              cursor="hand2")
-        left_arrow.pack(side=tk.LEFT, padx=20)
-        left_arrow.bind("<Button-1>", lambda e: self.prev_week())
-
-        # Right arrow
-        right_arrow = tk.Label(nav_frame,
-                               text=">",
-                               font=('Arial', 24, 'bold'),
-                               bg=self.colors['white'],
-                               fg="red",
-                               cursor="hand2")
-        right_arrow.pack(side=tk.LEFT, padx=20)
-        right_arrow.bind("<Button-1>", lambda e: self.next_week())
-
     def create_sidebar(self):
         sidebar = tk.Canvas(self.root, bg=self.colors['white'], width=120, height=600, highlightthickness=0)  # Increased height to 600
         sidebar.pack_propagate(False)  # Prevent the sidebar from resizing to fit its contents
@@ -195,8 +170,4 @@ class HomePage:
 
         # Example usage of create_rounded_rectangle
         create_rounded_rectangle(sidebar, 10, 10, 110, 590, radius=45, fill=self.colors['pup_maroon'], outline=self.colors['pup_maroon'])  # Adjusted height to 590
-    
-    def prev_week(self):
-        pass
-    def next_week(self):
-        pass
+
