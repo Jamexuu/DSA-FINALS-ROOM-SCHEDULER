@@ -3,8 +3,9 @@ from PIL import Image, ImageTk
 from reservation_page import ReservationPage
 
 class HomePage:
-    def __init__(self, root, colors):
+    def __init__(self, root, colors, fonts):
         self.root = root
+        self.fonts = fonts
         self.colors = colors
         self.setup_gui()
 
@@ -140,7 +141,7 @@ class HomePage:
             widget.destroy()
         
         # Navigate to the reservation page
-        reservation_page = ReservationPage(self.root, self.colors, day, self.setup_gui)
+        reservation_page = ReservationPage(self.root, self.colors, day, self.setup_gui, self.fonts)
         reservation_page.run()
 
     def create_navigation(self, parent):

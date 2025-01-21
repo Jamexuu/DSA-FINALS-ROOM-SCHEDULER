@@ -15,7 +15,13 @@ class PUPWeeklyCalendar:
             'pup_dark_maroon': "#4A0404",  # Dark maroon for boxes
             'box_maroon': "#800000",  # Slightly lighter maroon for day boxes
             'white': "#FFFFFF",
-            'black': "#000000"
+            'black': "#000000",
+            'gray': "#B1B6B0"
+        }
+
+        self.fonts = {
+            'gilroy bold': 'Gilroy Bold',
+            'gilroy heavy': 'Gilroy Heavy'
         }
         
         self.root.configure(bg=self.colors['white'])
@@ -29,7 +35,7 @@ class PUPWeeklyCalendar:
         self.root.iconphoto(False, icon_photo)
 
     def setup_gui(self):
-        self.home_page = HomePage(self.root, self.colors)
+        self.home_page = HomePage(self.root, self.colors, self.fonts)
 
     def run(self):
         self.root.mainloop()
@@ -37,3 +43,4 @@ class PUPWeeklyCalendar:
 if __name__ == "__main__":
     app = PUPWeeklyCalendar()
     app.run()
+    
